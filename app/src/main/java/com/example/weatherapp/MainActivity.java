@@ -1,8 +1,8 @@
 package com.example.weatherapp;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.NonNull;
 
-import android.content.Intent;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -25,6 +25,9 @@ public class MainActivity extends AppCompatActivity {
 
     EditText eCity;
     TextView cityName;
+    String weatherDesc = "";
+    double temperature = 0.0;
+    double windSpeed = 0.0;
 
     String url = "https://api.openweathermap.org/data/2.5/weather";
     String appid = "641e6a95d36a4f8c2fbb81ab27ae53cb";
@@ -35,30 +38,33 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        eCity = findViewById(R.id.editTextCityName);
+        cityName = findViewById(R.id.textViewCityNames);
     }
 
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putDouble("temperature",temperature);
+        savedInstanceState.putString("weatherDesc", weatherDesc);
+        savedInstanceState.putDouble("windSpeed",windSpeed);
+    }
 
-    public void openForcast(View view) {
-        // Create an intent to open ForecastActivity (navigate into other page)
-        Intent intent = new Intent(this, ForcastActivity.class);
-
-        // send some data with the other Activity with the intent.
-        intent.putExtra("CITY_NAME", "Tampere");
-
-        // start the activity through intent.
-        startActivity(intent);
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        if (savedInstanceState != null) {
+            savedInstanceState.getDouble("temperature",temperature);
+            savedInstanceState.getString("weatherDesc", weatherDesc);
+            savedInstanceState.getDouble("windSpeed",windSpeed);
+        }
     }
 
 
 
     public void updateWeather(View view) {
-
-        eCity = findViewById(R.id.editTextCityName);
-        cityName = findViewById(R.id.textViewCityNames);
-
         String tempUrl = "";
         String city = eCity.getText().toString().trim();
-
 
         if(city.equals("")) {
             Toast.makeText(this, "City field cannot be empty", Toast.LENGTH_SHORT).show();
@@ -74,15 +80,9 @@ public class MainActivity extends AppCompatActivity {
 
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         requestQueue.add(stringRequest);
-
     }
 
     private void parseJsonAndUpdateUI(String response) {
-
-        String weatherDesc = "";
-        double temperature = 0.0;
-        double windSpeed = 0.0;
-
         // parse the data from response
         // 1. Convert the response into JSONObject.
         try {
@@ -95,7 +95,6 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-
         // 2. Update data in the Screen.
         TextView weatherDescTextView = findViewById(R.id.textViewWeatherDescription);
         weatherDescTextView.setText(weatherDesc);
@@ -106,5 +105,4 @@ public class MainActivity extends AppCompatActivity {
         TextView windSpeedTextView = findViewById(R.id.textViewWindSpeed);
         windSpeedTextView.setText("" + windSpeed + " m/s");
     }
-
 }

@@ -4,22 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black"
+    android:background="@drawable/drawable_background"
     tools:context=".MainActivity">
-
-    <Button
-        android:id="@+id/forcastBtn"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="116dp"
-        android:layout_marginEnd="40dp"
-        android:onClick="openForcast"
-        android:text="@string/forecast"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextCityName" />
 
     <TextView
         android:id="@+id/textViewWindSpeed"
@@ -87,9 +73,7 @@
         android:id="@+id/editTextCityName"
         android:layout_width="335dp"
         android:layout_height="48dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="200dp"
-        android:layout_marginEnd="40dp"
+        android:layout_marginTop="236dp"
         android:autofillHints=""
         android:ems="10"
         android:hint="@string/enter_city_name"
@@ -97,7 +81,6 @@
         android:textColorHint="@color/cardview_dark_background"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewWindSpeed"
         tools:ignore="DuplicateSpeakableTextCheck" />
@@ -106,13 +89,10 @@
         android:id="@+id/updateBtn"
         android:layout_width="335dp"
         android:layout_height="48dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="44dp"
-        android:layout_marginEnd="40dp"
+        android:layout_marginTop="40dp"
         android:onClick="updateWeather"
-        android:text="@string/update"
+        android:text="@string/get_weather"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextCityName" />
 
